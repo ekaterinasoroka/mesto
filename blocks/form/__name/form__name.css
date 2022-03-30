@@ -1,0 +1,16 @@
+.form__name {
+  padding: 0 0 13px;
+  margin: 54px 0 0;
+  max-width: 358px;
+  width: 100%;
+	box-sizing: border-box;
+	border: 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 550px) {
+	.form__name {
+		margin: 75px 0 0;
+  	max-width: 238px;
+	}
+}

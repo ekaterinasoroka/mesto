@@ -1,0 +1,23 @@
+.form__save {
+  background: transparent url(../../../images/SaveIcon.svg) center no-repeat;
+	border: none;
+	max-width: 358px;
+	height: 50px;
+	margin: 48px 0 0;
+	padding: 14px 124px 18px;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1.22;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 550px) {
+	.form__save {
+		max-width: 238px;
+		height: 46px;
+		padding: 14px 82px;
+		font-size: 14px;
+		line-height: 1.21;
+	}
+}
