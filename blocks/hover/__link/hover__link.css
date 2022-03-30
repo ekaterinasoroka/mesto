@@ -1,7 +1,7 @@
-.hover_link {
+.hover__link {
       transition: filter 1s linear;
     }
       
-  .hover_link:hover {
+  .hover__link:hover {
    	 filter: opacity(60%);
   }
