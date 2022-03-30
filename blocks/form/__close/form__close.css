@@ -1,21 +1,25 @@
 .form__close {
-    background: transparent url(../../../images/CloseIcon.svg) center no-repeat;
-    margin: 0;
-    padding: 0;
-    border: solid;
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
+  background: transparent url(../../../images/CloseIcon.svg) center no-repeat;
+  margin: 0;
+  padding: 0;
+  border: solid;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: filter 1s linear;
+} 
+.form__close:hover {
+ 	 filter: opacity(60%);
 }
 
 @media screen and (max-width: 550px) {
-    .form__close {
-        top: -36px;
-        right: 0;
-        width: 20px;
-        height: 20px;
-    }
+  .form__close {
+    top: -36px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+  }
 }

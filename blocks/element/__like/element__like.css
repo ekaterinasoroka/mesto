@@ -5,4 +5,9 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	cursor: pointer;
+	transition: filter 1s linear;
+}
+   
+.element__like:hover {
+ 	 filter: opacity(60%);
 }

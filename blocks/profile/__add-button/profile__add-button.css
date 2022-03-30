@@ -12,6 +12,11 @@
   background-position: center;
   align-self: center;
   cursor: pointer;
+  transition: filter 1s linear;
+}
+
+.profile__add-button:hover {
+  filter: opacity(60%);
 }
 
 @media screen and (max-width: 1024px) {
