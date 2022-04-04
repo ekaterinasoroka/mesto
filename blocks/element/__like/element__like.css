@@ -6,6 +6,7 @@
 	background-position: center;
 	cursor: pointer;
 	transition: filter 1s linear;
+	border: none;
 }
    
 .element__like:hover {

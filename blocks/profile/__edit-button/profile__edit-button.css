@@ -19,3 +19,10 @@
 	filter: opacity(60%);
 }
 
+@media screen and (max-width: 500px) {
+	.profile__edit-button {
+		background: url(../../../images/EditButtonMobile.svg);
+		max-width: 18px;
+		height: 18px;
+	}
+}

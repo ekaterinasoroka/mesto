@@ -1,39 +1,38 @@
 const formEditProfile = document.querySelector('.profile__edit-button');
-const modalWindow = document.querySelector('.popap');
-const modalClose = document.querySelector('.form__close');
-
-
+const modalWindow = document.querySelector('.popup');
+const modalClose = document.querySelector('.popup__close');
+let formElement = document.querySelector('.form');
+let nameInput = document.querySelector('#form__input_name');
+let jobInput = document.querySelector('#form__input_profession');
+let nameForm = document.querySelector('.profile__title');
+let jobForm = document.querySelector('.profile__subtitle');
 
 function openModalWindow() {
-	modalWindow.classList.add('popap_is-active');
+	nameInput.value = nameForm.textContent;
+	jobInput.value = jobForm.textContent;
+	modalWindow.classList.add('popup_is-active');
 }
-formEditProfile.addEventListener('click', openModalWindow);
 
 function closeModalWindow() {
-	modalWindow.classList.remove('popap_is-active');
+	modalWindow.classList.remove('popup_is-active');
 }
-modalClose.addEventListener('click', closeModalWindow);
 
-function onOverlayClick(event) {
+/*function onOverlayClick(event) {
 	if (event.target === event.currentTarget) {
 		closeModalWindow();
 	}
 }
+modalWindow.addEventListener('click', onOverlayClick);*/
 
-modalWindow.addEventListener('click', onOverlayClick);
-
-let formElement = document.querySelector('.form');
-let nameInput = document.querySelector('.form__name');
-let jobInput = document.querySelector('.form__profession');
-let submitForm = document.querySelector('.profile');
-let nameForm = document.querySelector('.profile__title');
-let jobForm = document.querySelector('.profile__subtitle');
 function formSubmitHandler (event) {
 	event.preventDefault();
-	nameInput.value = nameForm.textContent;
-	jobInput.value = jobForm.textContent;
+	nameForm.textContent = nameInput.value;
+	jobForm.textContent = jobInput.value;
+	closeModalWindow();
 }
 
+formEditProfile.addEventListener('click', openModalWindow);
+modalClose.addEventListener('click', closeModalWindow);
 formElement.addEventListener('submit', formSubmitHandler); 
 
 

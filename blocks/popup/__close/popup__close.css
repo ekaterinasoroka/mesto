@@ -1,8 +1,8 @@
-.form__close {
+.popup__close {
   background: transparent url(../../../images/CloseIcon.svg) center no-repeat;
   margin: 0;
   padding: 0;
-  border: solid;
+  border: none;
   position: absolute;
   top: -40px;
   right: -40px;
@@ -11,12 +11,14 @@
   cursor: pointer;
   transition: filter 1s linear;
 } 
-.form__close:hover {
+.popup__close:hover {
  	 filter: opacity(60%);
 }
 
 @media screen and (max-width: 550px) {
-  .form__close {
+  .popup__close {
+    background: url(../../../images/CloseIconMobile.svg);
+    border: 0;
     top: -36px;
     right: 0;
     width: 20px;

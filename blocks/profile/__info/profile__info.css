@@ -3,7 +3,7 @@
 	flex-wrap: wrap;
 	align-self: center;
 	max-width: 336px;
-	margin-left: 45px;
+	margin-left: 28px;
 }
 
 @media screen and (max-width: 600px) {

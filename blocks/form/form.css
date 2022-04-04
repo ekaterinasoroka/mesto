@@ -1,25 +1,17 @@
 .form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
   font-family: inherit;
 	color: #000;
   font-size: 14px;
 	font-weight: 400;
 	line-height: 1.21;
-  max-width: 430px;
-  max-height: 330px;
-  width: 100%;
   padding: 34px 36px 37px;
-  background-color: #fff;
-  position: relative;
-  box-sizing: border-box;
-  border-radius: 10px;
-  margin: 195px auto;
 }
 
 @media screen and (max-width: 550px) {
   .form {
-    max-width: 282px;
-    max-height: 322px;
     padding: 25px 22px;
-    margin: 123px auto;
   }
 }
