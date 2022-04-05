@@ -10,9 +10,10 @@
   height: 32px;
   cursor: pointer;
   transition: filter 1s linear;
-} 
+}
+
 .popup__close:hover {
- 	 filter: opacity(60%);
+  filter: opacity(60%);
 }
 
 @media screen and (max-width: 550px) {
