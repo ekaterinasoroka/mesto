@@ -1,6 +1,6 @@
 const formEditProfile = document.querySelector('.profile__edit-button');
 const modalWindow = document.querySelector('.popup');
-const modalWindowProfile = document.querySelector('.popup__edit-button');
+const modalWindowProfile = document.querySelector('.popup_edit-button');
 const modalClose = document.querySelector('.popup__close_edit');
 const formСhangeInfo = document.querySelector('.form_popup_edit');
 const nameInput = document.querySelector('#form__input_name');
@@ -38,10 +38,10 @@ const formAddButton = document.querySelector('.profile__add-button');
 const elements = document.querySelector('.elements');
 const templateElements = document.querySelector('.template__elements');
 const formAddCards = document.querySelector('.form_popup_add');
-const modalWindowElements = document.querySelector('.popup__add-button');
+const modalWindowElements = document.querySelector('.popup_add-button');
 const modalCloseElements = document.querySelector('.popup__close_add');
 const buttonSaveAdd = document.querySelector('.form__save_add');
-const modalWindowFullSize = document.querySelector('.popup__full-size');
+const modalWindowFullSize = document.querySelector('.popup_full-size');
 const modalCloseFullSize = document.querySelector('.popup__close_full-size');
 
 function ModalWindowForm(modalWindow) {
