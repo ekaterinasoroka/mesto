@@ -8,6 +8,8 @@
   font-weight: 400;
   line-height: 1.21;
   padding: 34px 36px 37px;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 550px) {
