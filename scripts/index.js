@@ -67,6 +67,15 @@ function getCard(item) {
     elementLike.classList.toggle('element__like_is-active');
   }
 
+  function openBigImage(evt) {
+    const bigImage = document.querySelector('.popup__big-img');
+    const popupSubtitle = document.querySelector('.popup__subtitle');
+    popupSubtitle.textContent = item.name;
+    bigImage.src = item.link;
+    bigImage.alt = item.name;
+    openPopup(modalWindowFullSize);
+  }
+
   elementLike.addEventListener('click', clickOnLike);
   elementDelete.addEventListener('click', deleteCardElement);
   elementImg.addEventListener('click', openBigImage);
@@ -81,13 +90,7 @@ function deleteCardElement(evt) {
   removeElements.remove();
 }
 
-function openBigImage(evt) {
-  const bigImage = document.querySelector('.popup__big-img');
-  const popupSubtitle = document.querySelector('.popup__subtitle');
-  popupSubtitle.textContent = evt.target.textContent;
-  bigImage.src = evt.target.src;
-  openPopup(modalWindowFullSize);
-}
+
 
 buttonOpenProfileEdit.addEventListener('click', openPopupProfileForm);
 buttonOpenProfileEdit.addEventListener('click', function () {
