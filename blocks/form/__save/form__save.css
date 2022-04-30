@@ -5,12 +5,9 @@
 	height: 50px;
 	margin: 18px 0 0;
 	padding: 14px 124px 18px;
-	color: #fff;
-	font-size: 18px;
-	font-weight: 400;
-	line-height: 1.22;
 	cursor: pointer;
 	transition: filter 1s linear;
+	background-position: center;
 }
 
 .form__save:hover {

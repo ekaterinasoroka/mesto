@@ -1,5 +1,6 @@
 const buttonOpenProfileEdit = document.querySelector('.profile__edit-button');
 const modalWindowProfile = document.querySelector('.popup_edit-button');
+const modalWindow = document.querySelector('.popup');
 const buttonCloseModalProfileEdit = document.querySelector('.popup__close_edit');
 const formСhangeInfo = document.querySelector('.form_popup_edit');
 const nameInput = document.querySelector('#form__input_name');
@@ -17,9 +18,18 @@ const modalWindowFullSize = document.querySelector('.popup_full-size');
 const modalCloseFullSize = document.querySelector('.popup__close_full-size');
 const nameInputElement = document.querySelector('#form__input_cardname');
 const linkInputElement = document.querySelector('#form__input_link');
+const config = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__save',
+  inactiveButtonClass: 'form__save_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__error_visible'
+};
 
 function openPopup(popup) {
   popup.classList.add('popup_is-active');
+  removeError(config, popup);
 }
 
 function closePopup(popup) {
@@ -32,8 +42,6 @@ function handleAddCardFormSubmit(event) {
     { name: nameInputElement.value, link: linkInputElement.value });
   cardsContainer.prepend(newCardElement);
   closePopup(popupAddCard);
-  nameInputElement.value = "";
-  linkInputElement.value = "";
 }
 
 function openPopupProfileForm() {
@@ -63,19 +71,6 @@ function getCard(item) {
   elementImg.src = item.link;
   elementImg.alt = item.name;
 
-  function clickOnLike() {
-    elementLike.classList.toggle('element__like_is-active');
-  }
-
-  function openBigImage(evt) {
-    const bigImage = document.querySelector('.popup__big-img');
-    const popupSubtitle = document.querySelector('.popup__subtitle');
-    popupSubtitle.textContent = item.name;
-    bigImage.src = item.link;
-    bigImage.alt = item.name;
-    openPopup(modalWindowFullSize);
-  }
-
   elementLike.addEventListener('click', clickOnLike);
   elementDelete.addEventListener('click', deleteCardElement);
   elementImg.addEventListener('click', openBigImage);
@@ -90,17 +85,34 @@ function deleteCardElement(evt) {
   removeElements.remove();
 }
 
+function openBigImage(evt) {
+  const bigImage = document.querySelector('.popup__big-img');
+  const popupSubtitle = document.querySelector('.popup__subtitle');
+  popupSubtitle.textContent = evt.target.alt;
+  bigImage.src = evt.target.src;
+  bigImage.alt = evt.target.alt;
+  openPopup(modalWindowFullSize);
+}
+
+
+function clickOnLike(event) {
+  event.target.classList.toggle('element__like_is-active');
+}
+
 
 
 buttonOpenProfileEdit.addEventListener('click', openPopupProfileForm);
 buttonOpenProfileEdit.addEventListener('click', function () {
+  
   openPopup(modalWindowProfile);
+  
 });
 buttonCloseModalProfileEdit.addEventListener('click', function () {
   closePopup(modalWindowProfile);
 });
 formСhangeInfo.addEventListener('submit', handleProfileFormSubmit);
-buttonOpenFormAddCard.addEventListener('click', function () {
+buttonOpenFormAddCard.addEventListener('click', ()=> {
+  formAddCard.reset();
   openPopup(popupAddCard);
 });
 buttonCloseModalAddCard.addEventListener('click', function () {
@@ -111,9 +123,40 @@ modalCloseFullSize.addEventListener('click', function () {
   closePopup(modalWindowFullSize);
 });
 
-/*function onOverlayClick(event) {
+
+modalWindowProfile.addEventListener('click', (event) => {
   if (event.target === event.currentTarget) {
-    closeModalWindow();
+    closePopup(modalWindowProfile);
   }
-}
-modalWindow.addEventListener('click', onOverlayClick);*/
+});
+
+popupAddCard.addEventListener('click', (event) => {
+  if (event.target === event.currentTarget) {
+    closePopup(popupAddCard);
+  }
+});
+
+modalWindowFullSize.addEventListener('click', (event) => {
+  if (event.target === event.currentTarget) {
+    closePopup(modalWindowFullSize);
+  }
+});
+
+document.addEventListener('keydown', function(event){
+  if (event.key === 'Escape') {
+    closePopup(modalWindowProfile);
+  }
+});
+
+document.addEventListener('keydown', function(event){
+  if (event.key === 'Escape') {
+    closePopup(popupAddCard);
+  }
+});
+
+document.addEventListener('keydown', function(event){
+  if (event.key === 'Escape') {
+    closePopup(modalWindowFullSize);
+  }
+});
+
