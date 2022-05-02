@@ -128,7 +128,7 @@ buttonOpenFormAddCard.addEventListener('click', ()=> {
   const submitButton = document.querySelector('.form__save');
   formAddCard.reset();
   openPopup(popupAddCard);
-  disableSubmitButton(submitButton, inactiveButtonClass);
+  disableSubmitButton(submitButton, config.inactiveButtonClass);
 });
 
 buttonCloseModalAddCard.addEventListener('click', function () {
