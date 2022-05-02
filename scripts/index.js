@@ -18,22 +18,33 @@ const modalWindowFullSize = document.querySelector('.popup_full-size');
 const modalCloseFullSize = document.querySelector('.popup__close_full-size');
 const nameInputElement = document.querySelector('#form__input_cardname');
 const linkInputElement = document.querySelector('#form__input_link');
-const config = {
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__save',
-  inactiveButtonClass: 'form__save_disabled',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__error_visible'
+
+function closeButtonEsc (event) {
+  if (event.key === 'Escape') {
+    const openPopup = document.querySelector('.popup_is-active');
+    closePopup(openPopup);
+    }
 };
 
 function openPopup(popup) {
   popup.classList.add('popup_is-active');
+  document.addEventListener('keydown', closeButtonEsc);
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
+      closePopup(popup);
+    }
+  });
   removeError(config, popup);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_is-active');
+  document.removeEventListener('keydown', closeButtonEsc);
+  popup.removeEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
+      closePopup(popup);
+    }
+  });
 }
 
 function handleAddCardFormSubmit(event) {
@@ -41,7 +52,9 @@ function handleAddCardFormSubmit(event) {
   const newCardElement = getCard(
     { name: nameInputElement.value, link: linkInputElement.value });
   cardsContainer.prepend(newCardElement);
+  
   closePopup(popupAddCard);
+  
 }
 
 function openPopupProfileForm() {
@@ -70,7 +83,6 @@ function getCard(item) {
   elementName.textContent = item.name;
   elementImg.src = item.link;
   elementImg.alt = item.name;
-
   elementLike.addEventListener('click', clickOnLike);
   elementDelete.addEventListener('click', deleteCardElement);
   elementImg.addEventListener('click', openBigImage);
@@ -111,10 +123,14 @@ buttonCloseModalProfileEdit.addEventListener('click', function () {
   closePopup(modalWindowProfile);
 });
 formСhangeInfo.addEventListener('submit', handleProfileFormSubmit);
+
 buttonOpenFormAddCard.addEventListener('click', ()=> {
+  const submitButton = document.querySelector('.form__save');
   formAddCard.reset();
   openPopup(popupAddCard);
+  disableSubmitButton(submitButton, inactiveButtonClass);
 });
+
 buttonCloseModalAddCard.addEventListener('click', function () {
   closePopup(popupAddCard);
 });
@@ -122,41 +138,3 @@ formAddCard.addEventListener('submit', handleAddCardFormSubmit);
 modalCloseFullSize.addEventListener('click', function () {
   closePopup(modalWindowFullSize);
 });
-
-
-modalWindowProfile.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) {
-    closePopup(modalWindowProfile);
-  }
-});
-
-popupAddCard.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) {
-    closePopup(popupAddCard);
-  }
-});
-
-modalWindowFullSize.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) {
-    closePopup(modalWindowFullSize);
-  }
-});
-
-document.addEventListener('keydown', function(event){
-  if (event.key === 'Escape') {
-    closePopup(modalWindowProfile);
-  }
-});
-
-document.addEventListener('keydown', function(event){
-  if (event.key === 'Escape') {
-    closePopup(popupAddCard);
-  }
-});
-
-document.addEventListener('keydown', function(event){
-  if (event.key === 'Escape') {
-    closePopup(modalWindowFullSize);
-  }
-});
-
