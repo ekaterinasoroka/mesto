@@ -1,12 +1,11 @@
 const buttonOpenProfileEdit = document.querySelector('.profile__edit-button');
 const modalWindowProfile = document.querySelector('.popup_edit-button');
-const modalWindow = document.querySelector('.popup');
 const buttonCloseModalProfileEdit = document.querySelector('.popup__close_edit');
 const formСhangeInfo = document.querySelector('.form_popup_edit');
 const nameInput = document.querySelector('#form__input_name');
 const jobInput = document.querySelector('#form__input_profession');
-const nameForm = document.querySelector('.profile__title');
-const jobForm = document.querySelector('.profile__subtitle');
+const nameFormProfile = document.querySelector('.profile__title');
+const jobFormProfile = document.querySelector('.profile__subtitle');
 const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
 const cardsContainer = document.querySelector('.elements');
 const templateElement = document.querySelector('.template__elements');
@@ -18,6 +17,7 @@ const modalWindowFullSize = document.querySelector('.popup_full-size');
 const modalCloseFullSize = document.querySelector('.popup__close_full-size');
 const nameInputElement = document.querySelector('#form__input_cardname');
 const linkInputElement = document.querySelector('#form__input_link');
+const bigImage = document.querySelector('.popup__big-img');
 
 function closeButtonEsc (event) {
   if (event.key === 'Escape') {
@@ -58,14 +58,14 @@ function handleAddCardFormSubmit(event) {
 }
 
 function openPopupProfileForm() {
-  nameInput.value = nameForm.textContent;
-  jobInput.value = jobForm.textContent;
+  nameInput.value = nameFormProfile.textContent;
+  jobInput.value = jobFormProfile.textContent;
 }
 
 function handleProfileFormSubmit(event) {
   event.preventDefault();
-  nameForm.textContent = nameInput.value;
-  jobForm.textContent = jobInput.value;
+  nameFormProfile.textContent = nameInput.value;
+  jobFormProfile.textContent = jobInput.value;
   closePopup(modalWindowProfile);
 }
 
@@ -74,15 +74,15 @@ function render() {
   cardsContainer.append(...card);
 }
 
-function getCard(item) {
+function getCard(card) {
   const getElementsTemplate = templateElement.content.cloneNode(true);
   const elementName = getElementsTemplate.querySelector('.element__name');
   const elementImg = getElementsTemplate.querySelector('.element__img');
   const elementDelete = getElementsTemplate.querySelector('.element__delete');
   const elementLike = getElementsTemplate.querySelector('.element__like');
-  elementName.textContent = item.name;
-  elementImg.src = item.link;
-  elementImg.alt = item.name;
+  elementName.textContent = card.name;
+  elementImg.src = card.link;
+  elementImg.alt = card.name;
   elementLike.addEventListener('click', clickOnLike);
   elementDelete.addEventListener('click', deleteCardElement);
   elementImg.addEventListener('click', openBigImage);
@@ -98,7 +98,7 @@ function deleteCardElement(evt) {
 }
 
 function openBigImage(evt) {
-  const bigImage = document.querySelector('.popup__big-img');
+  
   const popupSubtitle = document.querySelector('.popup__subtitle');
   popupSubtitle.textContent = evt.target.alt;
   bigImage.src = evt.target.src;
@@ -125,7 +125,7 @@ buttonCloseModalProfileEdit.addEventListener('click', function () {
 formСhangeInfo.addEventListener('submit', handleProfileFormSubmit);
 
 buttonOpenFormAddCard.addEventListener('click', ()=> {
-  const submitButton = document.querySelector('.form__save');
+  const submitButton = formAddCard.querySelector(config.submitButtonSelector);
   formAddCard.reset();
   openPopup(popupAddCard);
   disableSubmitButton(submitButton, config.inactiveButtonClass);
