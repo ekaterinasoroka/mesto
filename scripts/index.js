@@ -29,11 +29,6 @@ function closeButtonEsc (event) {
 function openPopup(popup) {
   popup.classList.add('popup_is-active');
   document.addEventListener('keydown', closeButtonEsc);
-  popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
-      closePopup(popup);
-    }
-  });
   removeError(config, popup);
 }
 
@@ -137,4 +132,10 @@ buttonCloseModalAddCard.addEventListener('click', function () {
 formAddCard.addEventListener('submit', handleAddCardFormSubmit);
 modalCloseFullSize.addEventListener('click', function () {
   closePopup(modalWindowFullSize);
+});
+
+popup.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
+    closePopup(popup);
+  }
 });
