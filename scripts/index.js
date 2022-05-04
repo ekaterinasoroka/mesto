@@ -134,8 +134,20 @@ modalCloseFullSize.addEventListener('click', function () {
   closePopup(modalWindowFullSize);
 });
 
-popup.addEventListener('click', (evt) => {
+modalWindowProfile.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
-    closePopup(popup);
+    closePopup(modalWindowProfile);
+  }
+});
+
+popupAddCard.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
+    closePopup(popupAddCard);
+  }
+});
+
+modalWindowFullSize.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup_is-active')) {
+    closePopup(modalWindowFullSize);
   }
 });
