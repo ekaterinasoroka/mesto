@@ -67,7 +67,7 @@ function closeButtonEsc(event) {
 function openPopup(popup) {
   popup.classList.add('popup_is-active');
   document.addEventListener('keydown', closeButtonEsc);
-  removeError();
+  removeError(popup);
 };
 
 function closePopup(popup) {

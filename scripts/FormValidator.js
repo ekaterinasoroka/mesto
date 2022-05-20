@@ -24,9 +24,9 @@ export class FormValidator {
     errorElement.classList.remove(this._errorClass);
   };
   
-  removeError() {
-    const inputList = Array.from(this.popup.querySelectorAll(this._inputSelector));
-    const formElement = this.popup.querySelector(this._formSelector);
+  removeError(popup) {
+    const inputList = Array.from(popup.querySelectorAll(this._inputSelector));
+    const formElement = popup.querySelector(this._formSelector);
     inputList.forEach((inputElement) => {
       this._hideInputError(formElement, inputElement);
     });
@@ -39,11 +39,6 @@ export class FormValidator {
       this._hideInputError(inputElement);
     }
   }
-  
-
-  
-  
-  
   
   _hasInvalidInput(inputList) {
     return inputList.some(function(inputElement) {
