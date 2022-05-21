@@ -26,9 +26,9 @@ export class FormValidator {
   
   removeError(popup) {
     const inputList = Array.from(popup.querySelectorAll(this._inputSelector));
-    const formElement = popup.querySelector(this._formSelector);
+    // const formElement = popup.querySelector(this._formSelector);
     inputList.forEach((inputElement) => {
-      this._hideInputError(formElement, inputElement);
+      this._hideInputError(inputElement);
     });
    };
   
@@ -48,13 +48,13 @@ export class FormValidator {
   
   _toggleButtonState(inputList, submitButton){
     if (this._hasInvalidInput(inputList)) {
-      this._disableSubmitButton(submitButton);
+      this.disableSubmitButton(submitButton);
     } else {
       this._enableSubmitButton(submitButton);
     }
   };
   
-  _disableSubmitButton(submitButton){
+  disableSubmitButton(submitButton){
     submitButton.classList.add(this._inactiveButtonClass);
     submitButton.setAttribute("disabled", true);
   };

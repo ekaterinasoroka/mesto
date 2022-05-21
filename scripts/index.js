@@ -57,6 +57,7 @@ const formAddValidation = new FormValidator(config, formAddCard);
 formInfoValidation.enableValidation();
 formAddValidation.enableValidation();
 
+
 function closeButtonEsc(event) {
   if (event.key === 'Escape') {
     const openPopup = document.querySelector('.popup_is-active');
@@ -67,7 +68,6 @@ function closeButtonEsc(event) {
 function openPopup(popup) {
   popup.classList.add('popup_is-active');
   document.addEventListener('keydown', closeButtonEsc);
-  removeError(popup);
 };
 
 function closePopup(popup) {
@@ -135,7 +135,7 @@ function handleAddCardFormSubmit(event, item) {
 function createNewCard(item) {
   const card = new Card(item, '.template__elements', openBigImage);
   const cardElement = card.generateCard();
-  cardsContainer.append(cardElement);
+  cardsContainer.prepend(cardElement);
 }
 
 function openBigImage(item) {
@@ -159,15 +159,19 @@ buttonCloseModalProfileEdit.addEventListener('click', function () {
 });
 formСhangeInfo.addEventListener('submit', handleProfileFormSubmit);
 buttonOpenFormAddCard.addEventListener('click', ()=> {
-  const submitButton = formAddCard.querySelector(config.submitButtonSelector);
+  // const submitButton = formAddCard.querySelector(config.submitButtonSelector);
   formAddCard.reset();
   openPopup(popupAddCard);
-  disableSubmitButton(submitButton, config.inactiveButtonClass);
+  formAddValidation.removeError(popupAddCard);
+  formAddValidation.disableSubmitButton(buttonSaveAdd);
 });
 buttonCloseModalAddCard.addEventListener('click', function () {
   closePopup(popupAddCard);
 });
-formAddCard.addEventListener('submit', (event) => {handleAddCardFormSubmit(event, initialCards)} );
+formAddCard.addEventListener('submit', (event) => {
+  const inputName =  document.querySelector('#form__input_cardname');
+  const inputLink =  document.querySelector('#form__input_link');
+  handleAddCardFormSubmit(event, {inputName, inputLink})} );
 modalCloseFullSize.addEventListener('click', function () {
   closePopup(modalWindowFullSize);
 });
