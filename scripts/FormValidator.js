@@ -9,7 +9,6 @@ export class FormValidator {
     this._formElement = formElement;
   }
 
-  
   _showInputError(inputElement){
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(this._inputErrorClass);
@@ -26,7 +25,6 @@ export class FormValidator {
   
   removeError(popup) {
     const inputList = Array.from(popup.querySelectorAll(this._inputSelector));
-    // const formElement = popup.querySelector(this._formSelector);
     inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
@@ -85,7 +83,4 @@ export class FormValidator {
      this._setEventListener(formElement);                    
    });
   }
-  
-  // enableValidation(config);
-  
 }
