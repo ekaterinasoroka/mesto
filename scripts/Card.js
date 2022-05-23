@@ -1,9 +1,10 @@
 export class Card {
-  constructor(data, templateElement, openClickBigPhoto) {
+  constructor(data, templateSelector, openClickBigPhoto) {
     this._link = data.link;
     this._name = data.name;
-    this._templateElement = templateElement;
+    this._templateSelector = templateSelector;
     this.openClickBigPhoto = openClickBigPhoto;
+
   }
 
   _deleteCardElement() {
@@ -11,12 +12,12 @@ export class Card {
   }
 
   _clickOnLike() {
-    this._element.querySelector('.element__like').classList.toggle('element__like_is-active');
+    this._buttonLike.classList.toggle('element__like_is-active');
   }
 
   _getCard() {
     const cardElement = document
-    .querySelector(this._templateElement)
+    .querySelector(this._templateSelector)
     .content
     .querySelector('.element')
     .cloneNode(true);
@@ -30,12 +31,18 @@ export class Card {
 
   generateCard() {
     this._element = this._getCard();
-    this._element.querySelector('.element__img').src = this._link;
-    this._element.querySelector('.element__name').textContent = this._name;
-    
-    this._element.querySelector('.element__delete').addEventListener('click', this._deleteCardElement);
-    this._element.querySelector('.element__like').addEventListener('click', this._clickOnLike);
-    this._element.querySelector('.element__img').addEventListener('click', this.openBigPhoto);
+
+    this._buttonLike = this._element.querySelector('.element__like');
+    this._elementImg = this._element.querySelector('.element__img');
+    this._elementName = this._element.querySelector('.element__name');
+
+    this._elementImg.src = this._link;
+    this._elementName.textContent = this._name;
+    this._elementName.alt = this._name;
+
+    this._element.querySelector('.element__delete').addEventListener('click', () => {this._deleteCardElement()});
+    this._buttonLike.addEventListener('click', () => this._clickOnLike());
+    this._elementImg.addEventListener('click', this.openBigPhoto);
     
     return this._element;
   }

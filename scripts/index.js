@@ -19,6 +19,9 @@ const buttonSaveAdd = document.querySelector('.form__save_add');
 const modalWindowFullSize = document.querySelector('.popup_full-size');
 const modalCloseFullSize = document.querySelector('.popup__close_full-size');
 const bigImage = document.querySelector('.popup__big-img');
+const name =  document.querySelector('#form__input_cardname');
+const link =  document.querySelector('#form__input_link');
+const popupSubtitle = document.querySelector('.popup__subtitle');
 
 const initialCards = [
   {
@@ -93,10 +96,9 @@ initialCards.map((item) => {
 }); 
 
 function handleAddCardFormSubmit(event) {
-  const name =  document.querySelector('#form__input_cardname').value;
-  const link =  document.querySelector('#form__input_link').value;
+
   event.preventDefault();
-  const cardElement = createNewCard({name, link});
+  const cardElement = createNewCard({name: name.value, link: link.value});
   cardsContainer.prepend(cardElement);
   closePopup(popupAddCard);
 };
@@ -107,16 +109,15 @@ function createNewCard(item) {
 }
 
 function openBigImage(item) {
-  const popupSubtitle = document.querySelector('.popup__subtitle');
   popupSubtitle.textContent = item.name;
   bigImage.src = item.link;
   bigImage.alt = item.name;
   openPopup(modalWindowFullSize);
 };
 
-buttonOpenProfileEdit.addEventListener('click', openPopupProfileForm);
 buttonOpenProfileEdit.addEventListener('click', function () {
   openPopup(modalWindowProfile);
+  openPopupProfileForm;
 });
 buttonCloseModalProfileEdit.addEventListener('click', function () {
   closePopup(modalWindowProfile);
@@ -124,9 +125,9 @@ buttonCloseModalProfileEdit.addEventListener('click', function () {
 formСhangeInfo.addEventListener('submit', handleProfileFormSubmit);
 buttonOpenFormAddCard.addEventListener('click', ()=> {
   formAddCard.reset();
-  openPopup(popupAddCard);
   formAddValidation.removeError(popupAddCard);
   formAddValidation.disableSubmitButton(buttonSaveAdd);
+  openPopup(popupAddCard);
 });
 buttonCloseModalAddCard.addEventListener('click', function () {
   closePopup(popupAddCard);
@@ -135,10 +136,10 @@ formAddCard.addEventListener('submit', handleAddCardFormSubmit);
 modalCloseFullSize.addEventListener('click', function () {
   closePopup(modalWindowFullSize);
 });
-modalWindowProfile.addEventListener('click', (event) =>  {
+modalWindowProfile.addEventListener('mousedown', (event) =>  {
   handleCloseOverlay(event, modalWindowProfile);
 });
-popupAddCard.addEventListener('click', (event) =>  {
+popupAddCard.addEventListener('mousedown', (event) =>  {
   handleCloseOverlay(event, popupAddCard);
 });
 modalWindowFullSize.addEventListener('click', (event) =>  {
