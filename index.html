@@ -39,11 +39,11 @@
 			<form class="form form_popup_edit" name="popupForm" novalidate>
 				<h3 class="form__title">Редактировать профиль</h3>
 				<div class="form__input-container">
-					<input class="form__input" type="text" id="form__input_name" placeholder="Имя" required minlength="2" maxlength="40">
+					<input class="form__input" name="name" type="text" id="form__input_name" placeholder="Имя" required minlength="2" maxlength="40">
 					<span id="form__input_name-error"></span>
 				</div>
 				<div class="form__input-container">
-					<input class="form__input" type="text" id="form__input_profession" placeholder="Профессия" required minlength="2" maxlength="200">
+					<input class="form__input" name="job" type="text" id="form__input_profession" placeholder="Профессия" required minlength="2" maxlength="200">
 					<span id="form__input_profession-error"></span>
 				</div>
 				<button class="form__save" type="submit"></button>
@@ -57,7 +57,7 @@
 			<form class="form form_popup_add" name="popupFormElements" novalidate>
 				<h3 class="form__title">Новое место</h3>
 				<div class="form__input-container">
-					<input class="form__input" name ="name" type="text" id="form__input_cardname" placeholder="Название" required minlength="2" maxlength="30">
+					<input class="form__input" name ="cardname" type="text" id="form__input_cardname" placeholder="Название" required minlength="2" maxlength="30">
 					<span id="form__input_cardname-error"></span>
 				</div>
 				<div class="form__input-container">

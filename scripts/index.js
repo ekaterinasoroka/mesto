@@ -67,8 +67,9 @@ const formAdd = new PopupWithForm(
   '.popup_add',
   {
     handleSubmitForm: (item) => {
-      const cardElement = createNewCard({name: item.name, link: item.link});
+      const cardElement = createNewCard({name: item.cardname, link: item.link});
       cardList.addItem(cardElement);
+      formAdd.close();
     }
   }
 );
@@ -100,13 +101,16 @@ const formPopupEditForm = new PopupWithForm (
     }
   });
  
+
   
   buttonOpenProfileEdit.addEventListener('click', ()=> {
+    formPopupEditForm.open();
     const item = userInfo.getUserInfo();
       nameInput.value = item.name;
       jobInput.value = item.job;
       formInfoValidation.removeError();
-      formPopupEditForm.open();
+      formInfoValidation.disableSubmitButton();
+      formPopupEditForm.close();
   });
 
   buttonOpenFormAddCard.addEventListener('click', ()=> {
@@ -114,8 +118,10 @@ const formPopupEditForm = new PopupWithForm (
     formAddValidation.removeError();
     formAddValidation.disableSubmitButton();
   });
+
   formPopupEditForm.setEventListener();
   formAdd.setEventListener();
+ 
 
 
 // function closeButtonEsc(event) {
