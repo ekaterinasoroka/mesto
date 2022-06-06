@@ -75,9 +75,6 @@ export default class FormValidator {
     };
   
   enableValidation() {
-    this._formElement.addEventListener('submit', (event) => {
-      event.preventDefault();
-    });
     this._setEventListener();                    
   };
 };

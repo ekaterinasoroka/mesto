@@ -1,48 +1,13 @@
 import "./index.css";
 
 import Card from "../components/Card.js";
-import {config} from "../uniti.js";
+import {config} from "../utils/uniti.js";
 import FormValidator from "../components/FormValidator.js"; 
 import Section from '../components/Section';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-
-const buttonOpenProfileEdit = document.querySelector('.profile__edit-button');
-const formСhangeInfo = document.querySelector('.form_popup_edit');
-const nameInput = document.querySelector('#form__input_name');
-const jobInput = document.querySelector('#form__input_profession');
-const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
-const formAddCard = document.querySelector('.form_popup_add');
-
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
+import {buttonOpenProfileEdit, formСhangeInfo, nameInput, jobInput, buttonOpenFormAddCard, formAddCard, initialCards} from "../utils/constants.js";
 
 
 const createNewCard = (item) => {
@@ -69,15 +34,13 @@ const formAdd = new PopupWithForm(
   '.popup_add',
   {
     handleSubmitForm: (item) => {
-      const cardElement = createNewCard({name: item.cardname, link: item.link});
+      const cardElement = createNewCard({name: item.cardname, link: item.link, alt: item.cardname});
       cardList.addItem(cardElement);
       formAdd.close();
     }
   }
 );
 formAdd.setEventListener();
-
-
 
 const popupBigImage = new PopupWithImage(
   '.popup_full-size',
@@ -102,21 +65,23 @@ const formPopupEditForm = new PopupWithForm (
   });
   formPopupEditForm.setEventListener();
 
+const openPopupProfileForm = () => {
+  const item = userInfo.getUserInfo();
+  nameInput.value = item.name;
+  jobInput.value = item.job;
+}
   
   buttonOpenProfileEdit.addEventListener('click', ()=> {
     formPopupEditForm.open();
-    const item = userInfo.getUserInfo();
-      nameInput.value = item.name;
-      jobInput.value = item.job;
-      formInfoValidation.removeError();
-      formInfoValidation.disableSubmitButton();
-      
+    openPopupProfileForm();
+    formInfoValidation.removeError();
+    formInfoValidation.disableSubmitButton();
   });
 
   buttonOpenFormAddCard.addEventListener('click', ()=> {
     formAdd.open();
     formAddValidation.removeError();
-    // formAddValidation.disableSubmitButton();
+    formAddValidation.disableSubmitButton();
   });
 
 const formInfoValidation = new FormValidator(config, formСhangeInfo);
