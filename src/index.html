@@ -5,18 +5,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Место</title>
-	<link rel="stylesheet" href="./pages/index.css">
-	<script defer type="module" src="./scripts/index.js"></script>
+	<!-- <link rel="stylesheet" href="./pages/index.css">
+	<script defer type="module" src="./scripts/index.js"></script> -->
 	
 </head>
 
 <body class="page">
 	<header class="header">
-		<img class="header__logo" src="./images/logo.svg" alt="Логотип">
+		<img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип">
 	</header>
 
 	<section class="profile">
-		<img class="profile__avatar" src="./images/zhak-iv_kusto.jpg" alt="Жак-Ив Кусто">
+		<img class="profile__avatar" src="<%=require('./images/zhak-iv_kusto.jpg')%>" alt="Жак-Ив Кусто">
 		<div class="profile__info">
 			<h1 class="profile__title">Жак-Ив Кусто</h1>
 			<button class="profile__edit-button" type="button"></button>

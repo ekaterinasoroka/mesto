@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, templateSelector, openClickBigPhoto) {
+  constructor(data, templateSelector, {openClickBigPhoto}) {
+    this._data = data;
     this._link = data.link;
     this._name = data.name;
     this._templateSelector = templateSelector;
-    this.openClickBigPhoto = openClickBigPhoto;
+    this._openClickBigPhoto = openClickBigPhoto;
 
   }
 
@@ -25,9 +26,9 @@ export default class Card {
     return cardElement;
   }
 
-  openBigPhoto = () => {
-    this.openClickBigPhoto({name: this._name, link: this._link});
-  }
+  // openBigPhoto = () => {
+  //   this.openClickBigPhoto({name: this._name, link: this._link});
+  // }
 
   generateCard() {
     this._element = this._getCard();
@@ -42,7 +43,7 @@ export default class Card {
 
     this._element.querySelector('.element__delete').addEventListener('click', () => {this._deleteCardElement()});
     this._buttonLike.addEventListener('click', () => this._clickOnLike());
-    this._elementImg.addEventListener('click', this.openBigPhoto);
+    this._elementImg.addEventListener('click', () => this._openClickBigPhoto(this._data));
     
     return this._element;
   }
