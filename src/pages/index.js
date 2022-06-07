@@ -34,7 +34,7 @@ const formAdd = new PopupWithForm(
   '.popup_add',
   {
     handleSubmitForm: (item) => {
-      const cardElement = createNewCard({name: item.cardname, link: item.link, alt: item.cardname});
+      const cardElement = createNewCard({name: item.cardname, link: item.link});
       cardList.addItem(cardElement);
       formAdd.close();
     }

@@ -39,7 +39,7 @@ export default class Card {
 
     this._elementImg.src = this._link;
     this._elementName.textContent = this._name;
-    this._elementName.alt = this._name;
+    this._elementImg.alt = this._name;
 
     this._element.querySelector('.element__delete').addEventListener('click', () => {this._deleteCardElement()});
     this._buttonLike.addEventListener('click', () => this._clickOnLike());
