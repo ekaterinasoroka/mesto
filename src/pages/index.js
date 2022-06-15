@@ -7,8 +7,9 @@ import Section from '../components/Section';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-import {buttonOpenProfileEdit, formСhangeInfo, nameInput, jobInput, buttonOpenFormAddCard, formAddCard, initialCards} from "../utils/constants.js";
-
+import {buttonOpenProfileEdit, formСhangeInfo, nameInput, jobInput, buttonOpenFormAddCard, formAddCard, initialCards, elementDelete} from "../utils/constants.js";
+import Api from "../components/Api.js"
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 const createNewCard = (item) => {
   const card = new Card(item, '.template__elements', {
@@ -42,6 +43,11 @@ const formAdd = new PopupWithForm(
 );
 formAdd.setEventListener();
 
+const formDeleteCard = new PopupWithConfirmation(
+  '.popup_delete-card', 
+);
+formDeleteCard.setEventListener();
+
 const popupBigImage = new PopupWithImage(
   '.popup_full-size',
   '.popup__big-img',
@@ -65,15 +71,15 @@ const formPopupEditForm = new PopupWithForm (
   });
   formPopupEditForm.setEventListener();
 
-const openPopupProfileForm = () => {
-  const item = userInfo.getUserInfo();
-  nameInput.value = item.name;
-  jobInput.value = item.job;
-}
+// const openPopupProfileForm = () => {
+//   const item = userInfo.getUserInfo();
+//   nameInput.value = item.name;
+//   jobInput.value = item.job;
+// }
   
   buttonOpenProfileEdit.addEventListener('click', ()=> {
     formPopupEditForm.open();
-    openPopupProfileForm();
+    api.getInfoUsers();
     formInfoValidation.removeError();
     formInfoValidation.disableSubmitButton();
   });
@@ -84,12 +90,62 @@ const openPopupProfileForm = () => {
     formAddValidation.disableSubmitButton();
   });
 
+
 const formInfoValidation = new FormValidator(config, formСhangeInfo);
 const formAddValidation = new FormValidator(config, formAddCard);
 formInfoValidation.enableValidation();
 formAddValidation.enableValidation();
+
+
+
+
+
+
+const api = new Api({
+  url: 'https://nomoreparties.co/v1/cohort-42',
+  headers: {
+    authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33',
+    'Content-Type': 'application/json'
+  }
+}); 
+
+api.getInfoUsers()
+  .then((userInfo) => {
+    console.log(userInfo)
+  })
+  .catch((err) => {
+    console.log('Ошибка', err)
+  })
+
+  // const firstPromise = new Promise((resolve, reject) => {
+  //   if (someCondition) {
+  //     resolve(api.getInfoUsers());
+  //   } else {
+  //     reject();
+  //   }
+  // });
   
- 
+
+  // const secondPromise = new Promise((resolve, reject) => {
+  //   if (secondCondition) {
+  //     resolve('Второй промис');
+  //   } else {
+  //     reject();
+  //   }
+  // });
+  
+
+  // const promises = [firstPromise, secondPromise]
+  
+  // Promise.all(promises)
+  //   .then((userInfo) => {
+  //     return new UserInfo(
+  //       userInfo.name,
+  //       userInfo.about,
+  //       userInfo.avatar
+  //       );
+
+  //   }); 
 
 
 // function closeButtonEsc(event) {

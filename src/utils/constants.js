@@ -5,6 +5,7 @@ export const nameInput = document.querySelector('#form__input_name');
 export const jobInput = document.querySelector('#form__input_profession');
 export const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
 export const formAddCard = document.querySelector('.form_popup_add');
+export const elementDelete= document.querySelector('element__delete');
 
 
 export const initialCards = [
