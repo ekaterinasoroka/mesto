@@ -6,6 +6,9 @@ export const jobInput = document.querySelector('#form__input_profession');
 export const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
 export const formAddCard = document.querySelector('.form_popup_add');
 export const elementDelete= document.querySelector('element__delete');
+export const profileTitle = document.querySelector('.profile__title');
+export const profileSubtitle = document.querySelector('.profile__subtitle');
+export const profileAvatar = document.querySelector('.profile__avatar');
 
 
 export const initialCards = [

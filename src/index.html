@@ -16,11 +16,11 @@
 	</header>
 
 	<section class="profile">
-		<img class="profile__avatar" src="<%=require('./images/zhak-iv_kusto.jpg')%>" alt="Жак-Ив Кусто">
+		<img class="profile__avatar" name="avatar" src="<%=require('./images/zhak-iv_kusto.jpg')%>" alt="Жак-Ив Кусто">
 		<div class="profile__info">
-			<h1 class="profile__title">Жак-Ив Кусто</h1>
+			<h1 class="profile__title" name="name">Жак-Ив Кусто</h1>
 			<button class="profile__edit-button" type="button"></button>
-			<p class="profile__subtitle">Исследователь океана</p>
+			<p class="profile__subtitle" name="about">Исследователь океана</p>
 		</div>
 		<button class="profile__add-button" type="button"></button>
 	</section>
@@ -43,7 +43,7 @@
 					<span id="form__input_name-error"></span>
 				</div>
 				<div class="form__input-container">
-					<input class="form__input" name="job" type="text" id="form__input_profession" placeholder="Профессия" required minlength="2" maxlength="200">
+					<input class="form__input" name="about" type="text" id="form__input_profession" placeholder="Профессия" required minlength="2" maxlength="200">
 					<span id="form__input_profession-error"></span>
 				</div>
 				<button class="form__save" type="submit"></button>
@@ -95,7 +95,7 @@
 				<h2 class="element__name"></h2>
 				<div class="element__group-like">
 					<button class="element__like" type="button"></button>
-					<p class="element__like-number">5</p>
+					<p class="element__like-number"></p>
 				</div>
 				
 			</div>

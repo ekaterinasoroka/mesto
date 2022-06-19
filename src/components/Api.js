@@ -1,13 +1,18 @@
+import { profileTitle, profileSubtitle, profileAvatar } from "../utils/constants";
+
+
 export default class Api {
-  constructor({url, headers}) {
+  constructor(url, cardId) {
     this._url = url;
-    this._headers = headers;
-    // this._cardId = cardId;
+    this._cardId = cardId;
   }
 
   getInfoUsers() {
-    return fetch(`${this._url}`, {
-      headers: this._headers
+    return fetch('https://nomoreparties.co/v1/cohort-43/users/me', {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      }
     })
       .then((res) => {
         if(res.ok) {
@@ -15,25 +20,38 @@ export default class Api {
         }
         return Promise.reject('Ошибка')
       })  
+      .then((item) => {
+        
+        profileTitle.textContent = item.name,
+        profileSubtitle.textContent = item.about,
+        profileAvatar.src = item.avatar
+      
+      })
   }
 
   getCards() {
     return fetch(`${this._url}/cards`, {
-      headers: this._headers
+      headers: {
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      }
     })
       .then((res) => {
         if(res.ok) {
           return res.json();
         }
         return Promise.reject('Ошибка')
-      })  
+      })
+
   }
 
-  patchEditProfile(nameInfo, aboutInfo) {
+  patchEditProfile(item) {
     return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
       method: 'PATCH',
-      body: JSON.stringify({name: nameInfo, about: aboutInfo})
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      },
+      body: JSON.stringify({name: item.name, about: item.about})
     })
     .then((res) => {
         if(res.ok) {
@@ -43,11 +61,14 @@ export default class Api {
     })
   }
 
-  addNewCard(nameCard, linkCard) {
+  addNewCard(item) {
     return fetch(`${this._url}/cards`, {
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      },
       method: 'POST',
-      body: JSON.stringify({name: nameCard, link: linkCard})
+      body: JSON.stringify({name: item.cardname, link: item.link})
     })
     .then((res) => {
         if(res.ok) {
@@ -59,7 +80,9 @@ export default class Api {
 
   deleteCard() {
     return fetch(`${this._url}/cards/${this._cardId}`, {
-      headers: this._headers,
+      headers: {
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      },
       method: 'DELETE',
     })
     .then((res) => {
@@ -70,9 +93,28 @@ export default class Api {
     })
   }
 
-  putLike() {
-    return fetch(`${this._url}/cards/${this._cardId}`/likes, {
-      headers: this._headers,
+  deleteLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      },
+      method: 'DELETE'
+    })
+      .then((res) => {
+        if(res.ok) {
+          return res.json();
+        }
+        return Promise.reject('Ошибка')
+      })  
+  }
+
+  putLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      },
       method: 'PUT'
     })
       .then((res) => {
@@ -83,9 +125,14 @@ export default class Api {
       })  
   }
 
+
+
   updateAvatarUser(linkAvatar) {
     return fetch(`${this._url}/users/me/avatar`, {
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+      },
       method: 'PATCH',
       body: JSON.stringify({avatar: linkAvatar})
     })

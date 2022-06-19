@@ -11,17 +11,43 @@ import {buttonOpenProfileEdit, formСhangeInfo, nameInput, jobInput, buttonOpenF
 import Api from "../components/Api.js"
 import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
+let ownerId = null; 
+
 const createNewCard = (item) => {
-  const card = new Card(item, '.template__elements', {
+  const card = new Card(item, '.template__elements', ownerId, {
     openClickBigPhoto: () => {
       popupBigImage.open(item);
-    },
-  });
+    }  
+  },
+  handleLikeClick);
   return card.generateCard();
+
+}
+
+function handleLikeClick(card) {
+  if (card.isLiked()) {
+    api.deleteLike(card._cardId)
+    .then((res) => {
+      card.clickOnLike();
+      card.updateLikes(res.likes);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+     
+  } else {
+    api.putLike(card._cardId)
+      .then((res) => {
+        card.clickOnLike();
+        card.updateLikes(res.likes);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
 
 const cardList = new Section({
-  items: initialCards,
   renderer: (cardItem) => {
     const card = createNewCard(cardItem);
     cardList.addItem(card);
@@ -29,24 +55,31 @@ const cardList = new Section({
 },
 '.elements'
 );
-cardList.renderItems(initialCards);
+
 
 const formAdd = new PopupWithForm(
   '.popup_add',
   {
     handleSubmitForm: (item) => {
-      const cardElement = createNewCard({name: item.cardname, link: item.link});
-      cardList.addItem(cardElement);
-      formAdd.close();
+      api.addNewCard(item)
+      .then((res) => {
+        const cardElement = createNewCard(res);
+        cardList.addItem(cardElement);
+        formAdd.close();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
     }
   }
 );
 formAdd.setEventListener();
 
-const formDeleteCard = new PopupWithConfirmation(
-  '.popup_delete-card', 
-);
-formDeleteCard.setEventListener();
+// const formDeleteCard = new PopupWithConfirmation(
+//   '.popup_delete-card', 
+// );
+// formDeleteCard.setEventListener();
 
 const popupBigImage = new PopupWithImage(
   '.popup_full-size',
@@ -58,28 +91,36 @@ popupBigImage.setEventListener();
 
 const userInfo = new UserInfo(
 '.profile__title',
-'.profile__subtitle'
+'.profile__subtitle',
 );
 
 const formPopupEditForm = new PopupWithForm (
   '.popup_edit',
   {
     handleSubmitForm: (item) => {
-      userInfo.setUserInfo(item);
-      formPopupEditForm.close();
+      api.patchEditProfile(item)
+      .then((res) => {
+        userInfo.setUserInfo(res)
+        formPopupEditForm.close();
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+
+      
     }
   });
   formPopupEditForm.setEventListener();
 
-// const openPopupProfileForm = () => {
-//   const item = userInfo.getUserInfo();
-//   nameInput.value = item.name;
-//   jobInput.value = item.job;
-// }
+const openPopupProfileForm = () => {
+  const item = userInfo.getUserInfo();
+  nameInput.value = item.name;
+  jobInput.value = item.job;
+}
   
   buttonOpenProfileEdit.addEventListener('click', ()=> {
     formPopupEditForm.open();
-    api.getInfoUsers();
+    openPopupProfileForm();
     formInfoValidation.removeError();
     formInfoValidation.disableSubmitButton();
   });
@@ -101,21 +142,25 @@ formAddValidation.enableValidation();
 
 
 
-const api = new Api({
-  url: 'https://nomoreparties.co/v1/cohort-42',
-  headers: {
-    authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33',
-    'Content-Type': 'application/json'
-  }
-}); 
+const api = new Api('https://mesto.nomoreparties.co/v1/cohort-43'); 
 
-api.getInfoUsers()
-  .then((userInfo) => {
-    console.log(userInfo)
-  })
-  .catch((err) => {
-    console.log('Ошибка', err)
-  })
+api.getInfoUsers();
+   
+api.getCards()
+.then((cards) => { 
+  cardList.renderItems(cards)
+  console.log(cards)
+})
+.catch((err) => console.log(err));
+
+// api.patchEditProfile(nameInfo, aboutInfo)
+// .then((nameInfo, aboutInfo) => {
+//   console.log(nameInfo, aboutInfo)
+// })
+// .catch((err) => {
+//   console.log(err)
+// })
+
 
   // const firstPromise = new Promise((resolve, reject) => {
   //   if (someCondition) {

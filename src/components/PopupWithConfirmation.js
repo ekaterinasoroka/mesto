@@ -1,13 +1,14 @@
-import Popup from '../components/Popup.js';
+// import Popup from '../components/Popup.js';
 
-export default class PopupWithConfirmation extends Popup {
-  constructor(popupSelector) {
-    super(popupSelector);
-    this._popupForm = this._popupSelector.querySelector('.form');
-  }
+// export default class PopupWithConfirmation extends Popup {
 
-  setEventListener() {
-    super.setEventListener();
-  }
+//   setEventListener() {
+//     this._popupForm.addEventListener('submi', (evt) => {
+//       evt.preventDefault();
+//       this._handleSubmit();
 
-}
+//     });
+//     super.setEventListener();
+//   }
+
+// }
