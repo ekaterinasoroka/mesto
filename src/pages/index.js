@@ -13,6 +13,16 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 let ownerId = null; 
 
+const api = new Api('https://mesto.nomoreparties.co/v1/cohort-43'); 
+
+Promise.all([api.getInfoUsers(), api.getCards()])
+  .then(([user, cards]) => {
+    ownerId = user._id;
+    userInfo.setUserInfo(user);
+    cardList.renderItems(cards);
+  })
+  .catch(err => {console.log(err)});
+
 const createNewCard = (item) => {
   const card = new Card(item, '.template__elements', ownerId, {
     openClickBigPhoto: () => {
@@ -20,13 +30,17 @@ const createNewCard = (item) => {
     }  
   },
   handleLikeClick);
-  return card.generateCard();
-
+  const cardElement = card.generateCard();
+  if(card.isLiked()){
+    card.clickOnLike()
+  }
+  
+  return cardElement;
 }
 
 function handleLikeClick(card) {
   if (card.isLiked()) {
-    api.deleteLike(card._cardId)
+    api.deleteLike(card)
     .then((res) => {
       card.clickOnLike();
       card.updateLikes(res.likes);
@@ -36,7 +50,7 @@ function handleLikeClick(card) {
     })
      
   } else {
-    api.putLike(card._cardId)
+    api.putLike(card)
       .then((res) => {
         card.clickOnLike();
         card.updateLikes(res.likes);
@@ -92,6 +106,7 @@ popupBigImage.setEventListener();
 const userInfo = new UserInfo(
 '.profile__title',
 '.profile__subtitle',
+'.profile__avatar'
 );
 
 const formPopupEditForm = new PopupWithForm (
@@ -142,56 +157,9 @@ formAddValidation.enableValidation();
 
 
 
-const api = new Api('https://mesto.nomoreparties.co/v1/cohort-43'); 
-
-api.getInfoUsers();
-   
-api.getCards()
-.then((cards) => { 
-  cardList.renderItems(cards)
-  console.log(cards)
-})
-.catch((err) => console.log(err));
-
-// api.patchEditProfile(nameInfo, aboutInfo)
-// .then((nameInfo, aboutInfo) => {
-//   console.log(nameInfo, aboutInfo)
-// })
-// .catch((err) => {
-//   console.log(err)
-// })
 
 
-  // const firstPromise = new Promise((resolve, reject) => {
-  //   if (someCondition) {
-  //     resolve(api.getInfoUsers());
-  //   } else {
-  //     reject();
-  //   }
-  // });
-  
-
-  // const secondPromise = new Promise((resolve, reject) => {
-  //   if (secondCondition) {
-  //     resolve('Второй промис');
-  //   } else {
-  //     reject();
-  //   }
-  // });
-  
-
-  // const promises = [firstPromise, secondPromise]
-  
-  // Promise.all(promises)
-  //   .then((userInfo) => {
-  //     return new UserInfo(
-  //       userInfo.name,
-  //       userInfo.about,
-  //       userInfo.avatar
-  //       );
-
-  //   }); 
-
+ 
 
 // function closeButtonEsc(event) {
 //   if (event.key === 'Escape') {

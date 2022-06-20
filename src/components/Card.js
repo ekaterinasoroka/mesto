@@ -20,6 +20,17 @@ export default class Card {
     this._buttonLike.classList.toggle('element__like_is-active');
   }
 
+  updateLikes(likes) { //метод для обновления количества лайков
+    this._likes = likes;
+    this._elementLikes.textContent = this._likes.length; 
+  }
+
+  isLiked() { //проверяется есть ли наш лайк на карточке или нет
+    return this._likes.find((data) => {
+      data._id == this._ownerId
+    })
+  }
+
   _getCard() {
     const cardElement = document
     .querySelector(this._templateSelector)
@@ -29,21 +40,6 @@ export default class Card {
     
     return cardElement;
   }
-
-  isLiked() { //проверяется есть ли наш лайк на карточке или нет
-    return this._likes.find((data) => {
-      data._id == this._ownerId
-    })
-  }
-
-
-  updateLikes(likes) { //метод для обновления количества лайков
-    this._likes = likes;
-    this._elementLikes.textContent = this._likes.length; 
-  }
-
-
-
 
   generateCard() {
     this._element = this._getCard();
