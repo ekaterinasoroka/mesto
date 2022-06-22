@@ -2,133 +2,83 @@ export default class Api {
   constructor(url, cardId) {
     this._url = url;
     this._cardId = cardId;
+    this._headers = {
+      'Content-Type': 'application/json',
+      authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
+    }
+  }
+
+  _checkingTheResponse(res) {
+    if(res.ok) {
+      return res.json();
+    }
+    return Promise.reject('Ошибка')
   }
 
   getInfoUsers() {
     return fetch('https://nomoreparties.co/v1/cohort-43/users/me', {
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      }
+      headers: this._headers
     })
-      .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-      })  
+      .then(this._checkingTheResponse);
   }
 
   getCards() {
     return fetch(`${this._url}/cards`, {
-      headers: {
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      }
+      headers: this._headers
     })
-      .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-      })
+      .then(this._checkingTheResponse);
 
   }
 
   patchEditProfile(item) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      },
+      headers: this._headers,
       body: JSON.stringify({name: item.name, about: item.about})
     })
-    .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-    })
+    .then(this._checkingTheResponse);
   }
 
   addNewCard(item) {
     return fetch(`${this._url}/cards`, {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      },
+      headers: this._headers,
       method: 'POST',
       body: JSON.stringify({name: item.cardname, link: item.link})
     })
-    .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-    })
+    .then(this._checkingTheResponse);
   }
 
   deleteCard(data) {
     return fetch(`${this._url}/cards/${data._cardId}`, {
-      headers: {
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      },
+      headers: this._headers,
       method: 'DELETE',
     })
-    .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-    })
+    .then(this._checkingTheResponse);
   }
+
   putLike(data) {
     return fetch(`${this._url}/cards/${data._cardId}/likes`, {
-      headers: {
-
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      },
+      headers: this._headers,
       method: 'PUT'
     })
-      .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-      })  
+      .then(this._checkingTheResponse); 
   }
 
   deleteLike(data) {
     return fetch(`${this._url}/cards/${data._cardId}/likes`, {
-      headers: {
-
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      },
+      headers: this._headers,
       method: 'DELETE'
     })
-      .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-      })  
+    .then(this._checkingTheResponse);
   }
 
   updateAvatarUser(item) {
     return fetch(`${this._url}/users/me/avatar`, {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
-      },
+      headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({avatar: item.link})
     })
-    .then((res) => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject('Ошибка')
-    })
+    .then(this._checkingTheResponse);
   }
 
 }

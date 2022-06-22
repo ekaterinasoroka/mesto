@@ -24,7 +24,6 @@ export default class FormValidator {
   };
   
   removeError() {
-    // const inputList = Array.from(popup.querySelectorAll(this._inputSelector));
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });

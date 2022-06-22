@@ -10,3 +10,11 @@ export const profileSubtitle = document.querySelector('.profile__subtitle');
 export const formInfoAvatar = document.querySelector('.form_popup_avatar');
 export const buttonUpdateAvatar = document.querySelector('.profile__avatar-container');
 
+export const config = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__save',
+  inactiveButtonClass: 'form__save_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__error_visible'
+};
