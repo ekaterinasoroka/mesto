@@ -68,8 +68,8 @@ export default class Api {
     })
   }
 
-  deleteCard() {
-    return fetch(`${this._url}/cards/${this._cardId}`, {
+  deleteCard(data) {
+    return fetch(`${this._url}/cards/${data._cardId}`, {
       headers: {
         authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
       },
@@ -82,11 +82,10 @@ export default class Api {
         return Promise.reject('Ошибка')
     })
   }
-
   putLike(data) {
-    return fetch(`${this._url}/cards/${data._id}/likes`, {
+    return fetch(`${this._url}/cards/${data._cardId}/likes`, {
       headers: {
-        'Content-Type': 'application/json',
+
         authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
       },
       method: 'PUT'
@@ -100,9 +99,9 @@ export default class Api {
   }
 
   deleteLike(data) {
-    return fetch(`${this._url}/cards/${data._id}/likes`, {
+    return fetch(`${this._url}/cards/${data._cardId}/likes`, {
       headers: {
-        'Content-Type': 'application/json',
+
         authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
       },
       method: 'DELETE'
@@ -115,18 +114,14 @@ export default class Api {
       })  
   }
 
-
-
-
-
-  updateAvatarUser(linkAvatar) {
+  updateAvatarUser(item) {
     return fetch(`${this._url}/users/me/avatar`, {
       headers: {
         'Content-Type': 'application/json',
         authorization: 'ccde9c8b-0b7e-4a31-936e-1b52e9675d33'
       },
       method: 'PATCH',
-      body: JSON.stringify({avatar: linkAvatar})
+      body: JSON.stringify({avatar: item.link})
     })
     .then((res) => {
         if(res.ok) {

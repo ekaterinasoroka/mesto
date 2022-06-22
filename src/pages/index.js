@@ -7,9 +7,10 @@ import Section from '../components/Section';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-import {buttonOpenProfileEdit, formСhangeInfo, nameInput, jobInput, buttonOpenFormAddCard, formAddCard, initialCards, elementDelete} from "../utils/constants.js";
+import {buttonOpenProfileEdit, formСhangeInfo, nameInput, jobInput, buttonOpenFormAddCard, formAddCard, buttonUpdateAvatar, formInfoAvatar} from "../utils/constants.js";
 import Api from "../components/Api.js"
 import PopupWithConfirmation from "../components/PopupWithConfirmation";
+
 
 let ownerId = null; 
 
@@ -29,13 +30,22 @@ const createNewCard = (item) => {
       popupBigImage.open(item);
     }  
   },
-  handleLikeClick);
-  const cardElement = card.generateCard();
-  if(card.isLiked()){
-    card.clickOnLike()
-  }
-  
-  return cardElement;
+  handleLikeClick,
+  {handleRemoveButtonClick: (card) => {
+    formDeleteCard.open();
+    formDeleteCard.setSubmit(() => {
+      api.deleteCard(card)
+        .then(() => {
+          card.deleteCardElement();
+          formDeleteCard.close();
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    });
+  }});
+  return card.generateCard();
+ 
 }
 
 function handleLikeClick(card) {
@@ -45,10 +55,10 @@ function handleLikeClick(card) {
       card.clickOnLike();
       card.updateLikes(res.likes);
     })
-    .catch((err) => {
-      console.log(err)
-    })
-     
+    
+      .catch((err) => {
+        console.log(err)
+      })    
   } else {
     api.putLike(card)
       .then((res) => {
@@ -70,11 +80,32 @@ const cardList = new Section({
 '.elements'
 );
 
+const formAvatar = new PopupWithForm(
+  '.popup_avatar',
+  {
+    handleSubmitForm: (item) => {
+      formAvatar.renderLoading(true, 'form__save_disloading', 'form__save_loading')
+      api.updateAvatarUser(item)
+      .then((res) => {
+        userInfo.setUserInfo(res)
+        formAvatar.close();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        formAvatar.renderLoading(false, 'form__save_disloading', 'form__save_loading')
+      })
+    }
+  }
+)
+formAvatar.setEventListener();
 
 const formAdd = new PopupWithForm(
   '.popup_add',
   {
     handleSubmitForm: (item) => {
+      formAdd.renderLoading(true, 'form__save_disloading', 'form__save_loading')
       api.addNewCard(item)
       .then((res) => {
         const cardElement = createNewCard(res);
@@ -84,16 +115,19 @@ const formAdd = new PopupWithForm(
       .catch((err) => {
         console.log(err)
       })
+      .finally(() => {
+        formAdd.renderLoading(false, 'form__save_disloading', 'form__save_loading')
+      })
 
     }
   }
 );
 formAdd.setEventListener();
 
-// const formDeleteCard = new PopupWithConfirmation(
-//   '.popup_delete-card', 
-// );
-// formDeleteCard.setEventListener();
+const formDeleteCard = new PopupWithConfirmation(
+  '.popup_delete-card', 
+);
+formDeleteCard.setEventListener();
 
 const popupBigImage = new PopupWithImage(
   '.popup_full-size',
@@ -113,6 +147,7 @@ const formPopupEditForm = new PopupWithForm (
   '.popup_edit',
   {
     handleSubmitForm: (item) => {
+      formPopupEditForm.renderLoading(true, 'form__save_disloading', 'form__save_loading')
       api.patchEditProfile(item)
       .then((res) => {
         userInfo.setUserInfo(res)
@@ -120,6 +155,9 @@ const formPopupEditForm = new PopupWithForm (
       })
       .catch((res) => {
         console.log(res)
+      })
+      .finally(() => {
+        formPopupEditForm.renderLoading(false, 'form__save_disloading', 'form__save_loading')
       })
 
       
@@ -146,12 +184,19 @@ const openPopupProfileForm = () => {
     formAddValidation.disableSubmitButton();
   });
 
+  buttonUpdateAvatar.addEventListener("click", () => {
+    formAvatar.open();
+    formAvatarValidation.removeError();
+    formAvatarValidation.disableSubmitButton();
+  });
+
 
 const formInfoValidation = new FormValidator(config, formСhangeInfo);
 const formAddValidation = new FormValidator(config, formAddCard);
+const formAvatarValidation = new FormValidator(config, formInfoAvatar);
 formInfoValidation.enableValidation();
 formAddValidation.enableValidation();
-
+formAvatarValidation.enableValidation();
 
 
 
