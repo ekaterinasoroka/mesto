@@ -8,5 +8,5 @@ export const formAddCard = document.querySelector('.form_popup_add');
 export const profileTitle = document.querySelector('.profile__title');
 export const profileSubtitle = document.querySelector('.profile__subtitle');
 export const formInfoAvatar = document.querySelector('.form_popup_avatar');
-export const buttonUpdateAvatar = document.querySelector('.profile__avatar_container');
+export const buttonUpdateAvatar = document.querySelector('.profile__avatar-container');
 
